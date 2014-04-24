@@ -8,25 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <CoreMotion/CoreMotion.h>
 
-@interface POCFaceDetectionViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface POCFaceDetectionViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate>
 {
-    AVCaptureSession *session;
-    AVCaptureStillImageOutput *stillImageOutput;
-    AVCaptureVideoDataOutput *videoDataOutput;
-    AVCaptureVideoPreviewLayer *previewLayer;
-    dispatch_queue_t videoDataOutputQueue;
-   	CIDetector *faceDetector;
-    CGRect faceRect;
-    CALayer * faceSquare;
-    CGFloat effectiveScale;
-    UIImage * face;
-    BOOL detectFaces;
-}
-@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
-- (IBAction)takePictureAction:(id)sender;
-@property (weak, nonatomic) IBOutlet UIView *inRect;
-@property (weak, nonatomic) IBOutlet UIView *outRect;
+    AVCaptureVideoPreviewLayer *_previewLayer;
+    AVCaptureStillImageOutput *_stillImageOutput;
+    AVCaptureSession *_session;
+    CIDetector *_faceDetector;
+    CIContext *_ciContext;
 
+}
+@property (weak, nonatomic) IBOutlet UIImageView *faceMask;
+@property (weak, nonatomic) IBOutlet UIView *inclinationIndicatorView;
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UIView *previewView;
+@property (strong,nonatomic) CMMotionManager *motionManager;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *photoPreview;
+
+- (IBAction)takePictureAction:(id)sender;
+
+
+
 @end

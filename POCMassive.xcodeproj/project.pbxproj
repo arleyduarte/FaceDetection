@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		062AC7D019085C8C00B8BDEF /* POCGyroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 062AC7CF19085C8C00B8BDEF /* POCGyroViewController.m */; };
+		062AC7D219085D5400B8BDEF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 062AC7D119085D5400B8BDEF /* CoreMotion.framework */; };
+		062AC7D51909846300B8BDEF /* POCFaceDetectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 062AC7D41909846300B8BDEF /* POCFaceDetectorViewController.m */; };
 		067F36AE19040AFC00D57053 /* EnrollmentDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 067F36AD19040AFC00D57053 /* EnrollmentDataManager.m */; };
 		067F38E819040CCC00D57053 /* EnrollmentQueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 067F38E719040CCC00D57053 /* EnrollmentQueueManager.m */; };
 		067F38EE190410B200D57053 /* EnrollmentPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 067F38ED190410B200D57053 /* EnrollmentPicture.m */; };
@@ -58,6 +61,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		062AC7CE19085C8C00B8BDEF /* POCGyroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POCGyroViewController.h; path = Source/POCGyroViewController.h; sourceTree = "<group>"; };
+		062AC7CF19085C8C00B8BDEF /* POCGyroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POCGyroViewController.m; path = Source/POCGyroViewController.m; sourceTree = "<group>"; };
+		062AC7D119085D5400B8BDEF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		062AC7D31909846300B8BDEF /* POCFaceDetectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POCFaceDetectorViewController.h; path = Source/POCFaceDetectorViewController.h; sourceTree = "<group>"; };
+		062AC7D41909846300B8BDEF /* POCFaceDetectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POCFaceDetectorViewController.m; path = Source/POCFaceDetectorViewController.m; sourceTree = "<group>"; };
 		067F36AC19040AFC00D57053 /* EnrollmentDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnrollmentDataManager.h; path = Source/EnrollmentDataManager.h; sourceTree = "<group>"; };
 		067F36AD19040AFC00D57053 /* EnrollmentDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnrollmentDataManager.m; path = Source/EnrollmentDataManager.m; sourceTree = "<group>"; };
 		067F38E619040CCC00D57053 /* EnrollmentQueueManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollmentQueueManager.h; sourceTree = "<group>"; };
@@ -118,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				062AC7D219085D5400B8BDEF /* CoreMotion.framework in Frameworks */,
 				06AB77DD18F8B9C50019A87C /* CoreImage.framework in Frameworks */,
 				06AB77DB18F8B9850019A87C /* AVFoundation.framework in Frameworks */,
 				06AB779218F8B0710019A87C /* CoreGraphics.framework in Frameworks */,
@@ -146,6 +155,8 @@
 		067F36AB19040A9900D57053 /* Enrollment */ = {
 			isa = PBXGroup;
 			children = (
+				062AC7CE19085C8C00B8BDEF /* POCGyroViewController.h */,
+				062AC7CF19085C8C00B8BDEF /* POCGyroViewController.m */,
 				067F38E619040CCC00D57053 /* EnrollmentQueueManager.h */,
 				067F38E719040CCC00D57053 /* EnrollmentQueueManager.m */,
 				067F36AC19040AFC00D57053 /* EnrollmentDataManager.h */,
@@ -199,6 +210,7 @@
 		06AB778E18F8B0710019A87C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				062AC7D119085D5400B8BDEF /* CoreMotion.framework */,
 				06AB77DC18F8B9C50019A87C /* CoreImage.framework */,
 				06AB77DA18F8B9850019A87C /* AVFoundation.framework */,
 				06AB77D818F8B9580019A87C /* QuartzCore.framework */,
@@ -230,6 +242,8 @@
 				06AB77A818F8B0710019A87C /* POCSecondViewController.m */,
 				06AB77AA18F8B0710019A87C /* Images.xcassets */,
 				06AB779618F8B0710019A87C /* Supporting Files */,
+				062AC7D31909846300B8BDEF /* POCFaceDetectorViewController.h */,
+				062AC7D41909846300B8BDEF /* POCFaceDetectorViewController.m */,
 			);
 			path = POCMassive;
 			sourceTree = "<group>";
@@ -418,6 +432,7 @@
 			files = (
 				06AB779C18F8B0710019A87C /* main.m in Sources */,
 				06AB77A918F8B0710019A87C /* POCSecondViewController.m in Sources */,
+				062AC7D019085C8C00B8BDEF /* POCGyroViewController.m in Sources */,
 				067F38E819040CCC00D57053 /* EnrollmentQueueManager.m in Sources */,
 				06AB77A618F8B0710019A87C /* POCFirstViewController.m in Sources */,
 				067F38F7190411DA00D57053 /* Extras.m in Sources */,
@@ -427,6 +442,7 @@
 				067F38EE190410B200D57053 /* EnrollmentPicture.m in Sources */,
 				067F38FA190411FD00D57053 /* NSStringMD5.m in Sources */,
 				067F38F41904117A00D57053 /* POCAPIClient.m in Sources */,
+				062AC7D51909846300B8BDEF /* POCFaceDetectorViewController.m in Sources */,
 				06AB77A018F8B0710019A87C /* POCAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
