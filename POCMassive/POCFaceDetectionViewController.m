@@ -272,7 +272,7 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
                                                    options:@{CIDetectorEyeBlink: @YES,
                                                              CIDetectorAccuracyHigh:@YES,
                                                              CIDetectorImageOrientation: @5}];
-        NSLog(@"%d features", [features count]);
+        
         BOOL happyPicture = NO;
         if([features count] > 0) {
             happyPicture = YES;
