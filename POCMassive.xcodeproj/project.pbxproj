@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		062AC7D219085D5400B8BDEF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 062AC7D119085D5400B8BDEF /* CoreMotion.framework */; };
+		06777482191293AC0014EC4C /* enrol.png in Resources */ = {isa = PBXBuildFile; fileRef = 06777480191293AC0014EC4C /* enrol.png */; };
+		06777483191293AC0014EC4C /* enrol@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06777481191293AC0014EC4C /* enrol@2x.png */; };
+		06777486191298310014EC4C /* POCEnrollmentResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06777485191298310014EC4C /* POCEnrollmentResultViewController.m */; };
 		067F38EE190410B200D57053 /* EnrollmentPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 067F38ED190410B200D57053 /* EnrollmentPicture.m */; };
 		067F38F1190410DB00D57053 /* ResultCodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 067F38F0190410DB00D57053 /* ResultCodes.m */; };
 		067F38F41904117A00D57053 /* POCAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 067F38F31904117A00D57053 /* POCAPIClient.m */; };
@@ -56,6 +59,10 @@
 
 /* Begin PBXFileReference section */
 		062AC7D119085D5400B8BDEF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		06777480191293AC0014EC4C /* enrol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = enrol.png; path = Resources/enrol.png; sourceTree = "<group>"; };
+		06777481191293AC0014EC4C /* enrol@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "enrol@2x.png"; path = "Resources/enrol@2x.png"; sourceTree = "<group>"; };
+		06777484191298310014EC4C /* POCEnrollmentResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POCEnrollmentResultViewController.h; path = Source/POCEnrollmentResultViewController.h; sourceTree = "<group>"; };
+		06777485191298310014EC4C /* POCEnrollmentResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POCEnrollmentResultViewController.m; path = Source/POCEnrollmentResultViewController.m; sourceTree = "<group>"; };
 		067F38EC190410B200D57053 /* EnrollmentPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollmentPicture.h; sourceTree = "<group>"; };
 		067F38ED190410B200D57053 /* EnrollmentPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollmentPicture.m; sourceTree = "<group>"; };
 		067F38EF190410DB00D57053 /* ResultCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultCodes.h; sourceTree = "<group>"; };
@@ -137,6 +144,8 @@
 		067F36AB19040A9900D57053 /* Enrollment */ = {
 			isa = PBXGroup;
 			children = (
+				06777484191298310014EC4C /* POCEnrollmentResultViewController.h */,
+				06777485191298310014EC4C /* POCEnrollmentResultViewController.m */,
 			);
 			name = Enrollment;
 			sourceTree = "<group>";
@@ -250,6 +259,8 @@
 		06DD8B271905EB5F0060C9FA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				06777480191293AC0014EC4C /* enrol.png */,
+				06777481191293AC0014EC4C /* enrol@2x.png */,
 				06DD8B2C1905ED280060C9FA /* camera.png */,
 				06DD8B2D1905ED280060C9FA /* camera@2x.png */,
 				06DD8B281905EBA20060C9FA /* face.png */,
@@ -343,8 +354,10 @@
 				06DD8B2A1905EBA20060C9FA /* face.png in Resources */,
 				06DD8B2B1905EBA20060C9FA /* face@2x.png in Resources */,
 				06AB77AB18F8B0710019A87C /* Images.xcassets in Resources */,
+				06777482191293AC0014EC4C /* enrol.png in Resources */,
 				06AB77CC18F8B08C0019A87C /* Default-568h@2x.png in Resources */,
 				06AB779A18F8B0710019A87C /* InfoPlist.strings in Resources */,
+				06777483191293AC0014EC4C /* enrol@2x.png in Resources */,
 				06AB77A318F8B0710019A87C /* Main.storyboard in Resources */,
 				06AB77CF18F8B08C0019A87C /* Icon.png in Resources */,
 				06AB77CD18F8B08C0019A87C /* Default.png in Resources */,
@@ -402,6 +415,7 @@
 			files = (
 				06AB779C18F8B0710019A87C /* main.m in Sources */,
 				067F38F7190411DA00D57053 /* Extras.m in Sources */,
+				06777486191298310014EC4C /* POCEnrollmentResultViewController.m in Sources */,
 				06AB77D318F8B4610019A87C /* POCFaceDetectionViewController.m in Sources */,
 				067F38F1190410DB00D57053 /* ResultCodes.m in Sources */,
 				067F38EE190410B200D57053 /* EnrollmentPicture.m in Sources */,

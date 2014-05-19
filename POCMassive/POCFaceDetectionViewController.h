@@ -24,8 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (strong,nonatomic) CMMotionManager *motionManager;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *photoPreview;
+
 
 - (IBAction)takePictureAction:(id)sender;
 

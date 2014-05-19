@@ -13,6 +13,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
 #import <AVFoundation/AVFoundation.h>
+#import "MBProgressHUD.h"
+#import "POCEnrollmentResultViewController.h"
 
 @interface POCFaceDetectionViewController ()
 
@@ -24,9 +26,12 @@
 @synthesize inclinationIndicatorView;
 @synthesize motionManager;
 @synthesize cameraButton;
-@synthesize statusLabel;
 @synthesize faceMask;
-@synthesize photoPreview;
+
+
+#define TICK   NSDate *startTime = [NSDate date]
+#define TOCK   NSLog(@"Time: %f", -[startTime timeIntervalSinceNow])
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,10 +48,14 @@
     [self setupAVCapture];
     [self startDeviceMotion];
     
-    cameraButton.enabled = NO;
-    photoPreview.hidden = YES;
     
     
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSLog(@"viewDidAppear");
+    [self showPhotoElements];
 }
 
 
@@ -142,11 +151,13 @@
 	return [available allObjects];
 }
 
-
 #pragma mark - Take Picture
 - (IBAction)takePictureAction:(id)sender
 {
-    [self stopDeviceMotion];
+    
+    [self hiddePhotoElements];
+    
+    //[self stopDeviceMotion];
     AVCaptureConnection *stillConnection = [_stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
     [_stillImageOutput captureStillImageAsynchronouslyFromConnection:stillConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
         if(error) {
@@ -156,42 +167,50 @@
         
         NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
         
-        
-        _previewLayer.hidden = YES;
-        
-        self.previewView.hidden = NO;
-        self.faceMask.backgroundColor = [UIColor whiteColor];
-        self.faceMask.hidden = NO;
-        self.statusLabel.text = @"Procesando..";
-        self.statusLabel.hidden = NO;
-        inclinationIndicatorView.hidden = YES;
-        
-        
         CIImage *image = [CIImage imageWithData:jpegData];
-        [self imageContainsSmiles:image callback:^(BOOL happyFace) {
+        [self imageContainsFace:image callback:^(BOOL goodFace) {
             UIImage *smileyImage = [UIImage imageWithData:jpegData];
-            if(happyFace) {
-                
-                
-                self.statusLabel.text = @"Fue una buena foto";
-                cameraButton.hidden = YES;
-                self.photoPreview.image = smileyImage;
-                
-                photoPreview.hidden = NO;
-                
-            } else {
-                self.statusLabel.text = @"Mala foto...";
-                self.photoPreview.image = smileyImage;
-                photoPreview.hidden = NO;
-            }
-            
-            [_session stopRunning];
-            
+            [self showEnrollmentResult:goodFace withImage:smileyImage];
         }];
         
         
         
     }];
+}
+
+-(void) hiddePhotoElements
+{
+    _previewLayer.hidden = YES;
+    faceMask.hidden = YES;
+    cameraButton.hidden = YES;
+    inclinationIndicatorView.hidden = YES;
+    [self stopDeviceMotion];
+}
+
+-(void) showPhotoElements
+{
+    _previewLayer.hidden = NO;
+    faceMask.hidden = NO;
+    cameraButton.hidden = NO;
+    inclinationIndicatorView.hidden = NO;
+    [self startDeviceMotion];
+}
+
+
+
+-(void) showEnrollmentResult:(BOOL) result withImage:(UIImage *) faceImage
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    POCEnrollmentResultViewController *enrollmentR = [storyBoard instantiateViewControllerWithIdentifier:@"POCEnrollmentResultViewController"];
+    [enrollmentR setResultImage:faceImage];
+    if(result){
+        [enrollmentR setEnrollmentResult:@"Buena Foto!"];
+    }else{
+        [enrollmentR setEnrollmentResult:@"Mala Foto!"];
+    }
+    
+    [self.navigationController pushViewController:enrollmentR animated:YES];
+    
 }
 
 
@@ -201,13 +220,9 @@
     // Create a CMMotionManager
     motionManager = [[CMMotionManager alloc] init];
     
-    // Tell CoreMotion to show the compass calibration HUD when required
-    // to provide true north-referenced attitude
     motionManager.showsDeviceMovementDisplay = YES;
-    motionManager.deviceMotionUpdateInterval = 2.0 / 60.0;
     
-    NSTimeInterval delta = 0.005;
-    NSTimeInterval updateInterval = 1 + delta * 100;
+    NSTimeInterval updateInterval = 1/100;
     
     // Attitude that is referenced to true north
     [motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXArbitraryZVertical];
@@ -215,7 +230,7 @@
     
     [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
         
-        CGFloat angle =  atan2( motion.gravity.x, motion.gravity.y);
+        CGFloat angle =  atan2(motion.gravity.x, motion.gravity.y);
         CGAffineTransform transform = CGAffineTransformMakeRotation(angle);
         self.inclinationIndicatorView.transform = transform;
         CGFloat factorGravity =motion.gravity.z*1000;
@@ -256,9 +271,14 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     NSLog(@"captureOutput");
 }
 
-- (void)imageContainsSmiles:(CIImage *)image callback:(void (^)(BOOL happyFace))callback
+- (void)imageContainsFace:(CIImage *)image callback:(void (^)(BOOL goodFace))callback
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    TICK;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Validando rasgos faciales...";
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
         if(!_ciContext) {
             _ciContext = [CIContext contextWithOptions:nil];
         }
@@ -270,23 +290,20 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         // Perform the detections
         NSArray *features = [_faceDetector featuresInImage:image
                                                    options:@{CIDetectorEyeBlink: @YES,
-                                                             CIDetectorAccuracyHigh:@YES,
+                                                             CIDetectorAccuracyLow:@YES,
                                                              CIDetectorImageOrientation: @5}];
+        
+        
         
         BOOL happyPicture = NO;
         if([features count] > 0) {
             happyPicture = YES;
         }
-        for(CIFeature *feature in features) {
-            if ([feature isKindOfClass:[CIFaceFeature class]]) {
-                CIFaceFeature *faceFeature = (CIFaceFeature *)feature;
-                
-                if(faceFeature.leftEyeClosed || faceFeature.rightEyeClosed) {
-                    happyPicture = NO;
-                }
-            }
-        }
+        
+        TOCK;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
+            [hud hide:YES];
             callback(happyPicture);
         });
     });
